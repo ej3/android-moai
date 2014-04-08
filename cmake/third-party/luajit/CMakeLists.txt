@@ -74,8 +74,8 @@ cmake_minimum_required(VERSION 2.8)
     
 
     message( "Size of void P =  ${CMAKE_SIZEOF_VOID_P} and ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-    if (${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" AND
-            ${CMAKE_SIZEOF_VOID_P} EQUAL 4 OR GCC_FORCE_32BIT)
+    if ((${CMAKE_SIZEOF_VOID_P} EQUAL 4 AND (  ${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "64" OR CMAKE_HOST_UNIX))
+    	OR GCC_FORCE_32BIT)
         # The host compiler must have same pointer size as the target compiler.
 
         set (luajit_host_cc "${luajit_host_cc} -m32")
@@ -178,4 +178,3 @@ cmake_minimum_required(VERSION 2.8)
    # add_dependencies(liblua-static libluajit)
 
    set( LUA_HEADERS ${LUAJIT_INCLUDE}  PARENT_SCOPE)
-    
